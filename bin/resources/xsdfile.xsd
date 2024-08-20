@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <!-- Define a simple type for the custom date format -->
+    <xs:simpleType name="CustomDateTime">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{4}\s\d{2}\s\d{2}\s\d{2}:\d{2}"/>
+            <!-- The pattern enforces 'yyyy MM dd HH:mm' -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="EventDate">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="DateTime" type="CustomDateTime"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
