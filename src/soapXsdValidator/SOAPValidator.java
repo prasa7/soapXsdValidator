@@ -1,4 +1,4 @@
-package xmlXsdValidator;
+package soapXsdValidator;
 
 import java.io.File;
 import java.io.IOException;
