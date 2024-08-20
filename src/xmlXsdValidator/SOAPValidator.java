@@ -1,41 +1,50 @@
 package xmlXsdValidator;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import org.xml.sax.SAXException;
-import java.io.IOException;
 
-public class XMLValidator {
+import org.xml.sax.SAXException;
+
+public class SOAPValidator {
 
     public static void main(String[] args) {
         
-        String xmlFile = "src/resources/xmlfile.xml";
+        String soapRequest = "src/resources/soap-request.xml";
         String xsdFile = "src/resources/xsdfile.xsd";
+        
+        try {
+            // Read the XML content into a String
+            String xmlContent = new String(Files.readAllBytes(Paths.get(soapRequest)));
 
-        if (validateXMLSchema(xsdFile, xmlFile)) {
-            System.out.println("XML is valid against the XSD.");
-        } else {
-            System.out.println("XML is NOT valid against the XSD.");
+            // Perform validation
+            if (validateXMLSchema(xsdFile, xmlContent)) {
+                System.out.println("SOAP XML is valid against the XSD.");
+            } else {
+                System.out.println("SOAP XML is NOT valid against the XSD.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static boolean validateXMLSchema(String xsdPath, String xmlPath) {
+    public static boolean validateXMLSchema(String xsdPath, String xmlContent) {
         try {
-            // Create a SchemaFactory for the W3C XML Schema
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-            // Load the XSD file as a schema
             Schema schema = factory.newSchema(new File(xsdPath));
-
-            // Create a Validator from the schema
             Validator validator = schema.newValidator();
 
-            // Validate the XML file against the schema
-            validator.validate(new StreamSource(new File(xmlPath)));
+            // Validate the XML content from the String
+            validator.validate(new StreamSource(new StringReader(xmlContent)));
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
             return false;

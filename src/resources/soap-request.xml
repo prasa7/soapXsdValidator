@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://example.com/namespace">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:EventDate>
+         <ns:DateTime>2021 04 08 12:24</ns:DateTime>
+      </ns:EventDate>
+   </soapenv:Body>
+</soapenv:Envelope>
